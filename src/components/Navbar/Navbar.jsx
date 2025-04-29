@@ -49,9 +49,21 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-white z-40 flex flex-col justify-center items-center space-y-8 text-xl">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-white z-40 flex flex-col items-center pt-16 space-y-8 text-xl">
+          {/* Close button inside menu */}
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="absolute top-4 right-4 text-gray-700 hover:text-black-500"
+          >
+            <VscChromeClose size={28} />
+          </button>
+
+          {/* Menu Items */}
           {navItems.map(({ id, text, link }) => (
-            <li key={id} className="list-none hover:scale-105 duration-200 font-semibold cursor-pointer">
+            <li
+              key={id}
+              className="list-none hover:scale-105 duration-200 font-semibold cursor-pointer"
+            >
               <Link to={link} onClick={() => setMenuOpen(false)}>{text}</Link>
             </li>
           ))}
