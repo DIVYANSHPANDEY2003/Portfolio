@@ -1,9 +1,11 @@
-import React from "react";
-import axios from "axios";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
+  const form = useRef();
+
   const {
     register,
     handleSubmit,
@@ -11,21 +13,24 @@ function Contact() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    const userInfo = {
-      name: data.name,
-      email: data.email,
-      message: data.message,
-    };
-
-    try {
-      await axios.post("https://getform.io/f/bmdkxlea", userInfo);
-      toast.success("Your message has been sent successfully!");
-      reset(); // Clear form after successful submission
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong. Please try again.");
-    }
+  const onSubmit = () => {
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      form.current,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+      .then(
+        () => {
+          toast.success("Your message has been sent successfully!");
+          reset();
+        },
+        (error) => {
+          console.error("EmailJS Error:", error.text);
+          toast.error("Something went wrong. Please try again.");
+        }
+      );
   };
 
   return (
@@ -43,6 +48,7 @@ function Contact() {
 
         <div className="flex flex-col items-center justify-center">
           <form
+            ref={form}
             onSubmit={handleSubmit(onSubmit)}
             className="bg-white w-full max-w-md px-8 py-6 rounded-xl shadow-md"
           >
@@ -56,14 +62,14 @@ function Contact() {
                 Full Name
               </label>
               <input
-                {...register("name", { required: "Full Name is required" })}
+                {...register("user_name", { required: "Full Name is required" })}
                 className="shadow rounded-lg border py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400"
                 type="text"
                 placeholder="Enter your full name"
               />
-              {errors.name && (
+              {errors.user_name && (
                 <span className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
+                  {errors.user_name.message}
                 </span>
               )}
             </div>
@@ -74,7 +80,7 @@ function Contact() {
                 Email Address
               </label>
               <input
-                {...register("email", {
+                {...register("user_email", {
                   required: "Email Address is required",
                   pattern: {
                     value: /^\S+@\S+$/i,
@@ -85,9 +91,26 @@ function Contact() {
                 type="email"
                 placeholder="Enter your email address"
               />
-              {errors.email && (
+              {errors.user_email && (
                 <span className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
+                  {errors.user_email.message}
+                </span>
+              )}
+            </div>
+            {/* Subject */}
+            <div className="flex flex-col mb-4">
+              <label className="block text-gray-700 font-medium mb-2">
+                Subject
+              </label>
+              <input
+                {...register("user_subject", { required: "Subject is required" })}
+                className="shadow rounded-lg border py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400"
+                type="text"
+                placeholder="Please Enter your subject"
+              />
+              {errors.subject && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.subject.message}
                 </span>
               )}
             </div>

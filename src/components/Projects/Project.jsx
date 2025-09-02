@@ -12,14 +12,14 @@ function Project() {
       image: portfolio,
       name: "Portfolio Website",
       description: "A personal portfolio website showcasing skills, projects, and contact details.",
-      github: "https://github.com/yourusername/portfolio",
+      // github: "https://github.com/yourusername/portfolio",
     },
     {
       id: 2,
       image: bankManagement,
       name: "Bank Management System",
       description: "A banking system to manage accounts, transactions, and customer details.",
-      github: "https://github.com/yourusername/bank-management",
+      // github: "https://github.com/yourusername/bank-management",
     },
     {
       id: 3,
