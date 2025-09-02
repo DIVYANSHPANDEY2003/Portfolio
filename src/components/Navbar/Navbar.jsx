@@ -19,7 +19,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <img src="/my_image.jpg" alt="Logo" className="w-12 h-12 rounded-full" />
+          <img src="/logo.png" alt="Logo" className="w-12 h-12 rounded-full" />
           <div className="flex flex-col">
             <h1 className="font-semibold text-xl cursor-pointer">
               Divyans

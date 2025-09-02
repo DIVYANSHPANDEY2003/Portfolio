@@ -10,6 +10,7 @@ import Project from './components/Projects/Project';
 import Skills from './components/Skills/Skills';
 import ScrollToTop from './ScrollToTop';
 
+
 function App() {
   return (
     <Router>
